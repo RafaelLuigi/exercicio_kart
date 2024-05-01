@@ -1,0 +1,52 @@
+#exercicio kart com numpy e pandas
+import numpy as np
+
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+#definicao matriz com numpy
+matriz_tempo_a = np.random.randint (6,120,size = (10,6))
+matriz_tempo_b = (matriz_tempo_a / 1000) #para gerar os segundos em .float
+matriz_completa = (matriz_tempo_a + matriz_tempo_b)
+
+
+#definicao de dataframe com base na matriz
+dados_a = df1 = pd.DataFrame(matriz_completa, index=['Volta 1','Volta 2', 'Volta 3', 'Volta 4','Volta 5',
+                                                     'Volta 6', 'Volta 7', 'Volta 8', 'Volta 9', 'Volta 10'],
+                                            columns=['Senna','Massa', 'Albon', 'Sainz','Leclerc','Prost'])
+
+
+#menor tempo de cada piloto, o menor tempo geral e o piloto que fez o tempo
+tempo_min_all = df1.min()
+tempo_min_ind = df1.min().min()
+piloto_vencedor = tempo_min_all.idxmin()
+
+#melhor volta do piloto vencedor
+melhor_volta = df1[piloto_vencedor].idxmin()
+
+#soma das linhas e menor valor do resultado das somas
+soma_linhas = df1.sum(axis=1)
+tempo_medio_min = soma_linhas.min() / 6
+posicao_medio_min = soma_linhas.idxmin()
+
+#classificacao em ordem crescente
+ordem = tempo_min_all.sort_values()
+
+print ("O piloto mais rapido foi o",piloto_vencedor,"com o tempo de",tempo_min_ind,"na",melhor_volta)
+print ("A volta com a média mais rápida é a",posicao_medio_min,"com tempo medio de",tempo_medio_min,"\n")
+print ("Classificacao final\n",ordem)
+
+dados_a
+
+
+#variaveis de criacao
+tempo_medio_de_volta = df1.mean(axis=0)
+pilotos = df1.columns.tolist()
+
+
+#utilizando matplotlib
+plt.title("Média de tempo de volta")
+plot_pizza = plt.pie (tempo_medio_de_volta,
+                  labels=tempo_medio_de_volta,)
+plt.legend(pilotos,loc ="best")
